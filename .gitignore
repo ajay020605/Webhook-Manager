@@ -1,0 +1,39 @@
+# -------------------------
+# Node.js / Express Backend
+# -------------------------
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Build output
+dist/
+build/
+
+# Coverage
+coverage/
+.nyc_output/
+
+# Logs
+*.log
+
+# -------------------------
+# System / Editor
+# -------------------------
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/
+.history/
+*.code-workspace
+
+# JetBrains (WebStorm/IntelliJ)
+.idea/
+*.iml
