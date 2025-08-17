@@ -37,6 +37,8 @@ router.post("/signup", async (req, res) => {
     // Issue JWT
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "7d" });
 
+
+    // Send response
     res.json({ token });
   } catch (err) {
     if (err instanceof z.ZodError) {
@@ -61,6 +63,10 @@ router.post("/signin", async (req, res) => {
     // Issue JWT
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "7d" });
 
+    // Set custom header
+  
+
+    // Send response
     res.json({ token });
   } catch (err) {
     if (err instanceof z.ZodError) {
