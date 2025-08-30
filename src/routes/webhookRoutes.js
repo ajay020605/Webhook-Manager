@@ -1,4 +1,3 @@
-// routes/webhookRoutes.js
 import express from "express";
 import { Event } from "../models/Event.js";
 import { App } from "../models/App.js";
@@ -10,16 +9,17 @@ import { authMiddleware } from "../middlewares/auth.js";
 const router = express.Router();
 
 // 1) Receive incoming Zoom webhook
-// Public endpoint but associates event with the App owner
+// Currently protected with authMiddleware (good for testing)
+// For production, replace authMiddleware with a signature/secret check.
 router.post("/receive", authMiddleware, async (req, res) => {
   try {
     console.log("Incoming webhook:", req.body);
     console.log("Incoming headers:", req.headers);
 
-    // Find Zoom app (assume only one Zoom app)
-    const app = await App.findOne({ name: "Zoom" });
+    // 🔑 Find Zoom app for this specific user
+    const app = await App.findOne({ name: "Zoom", user: req.user._id });
     if (!app) {
-      return res.status(500).json({ success: false, error: "Zoom app not found in DB" });
+      return res.status(404).json({ success: false, error: "Zoom app not found for this user" });
     }
 
     // Use targetUrl from the app or fallback to default
@@ -32,7 +32,7 @@ router.post("/receive", authMiddleware, async (req, res) => {
       status: "pending",
       targetUrl,
       app: app._id,
-      user: app.user // associate event with app owner
+      user: app.user // associate with correct user
     });
 
     // Queue the event for delivery
@@ -64,7 +64,7 @@ router.get("/events", authMiddleware, async (req, res) => {
     const events = await Event.find(query)
       .sort({ createdAt: -1 })
       .limit(Number(limit))
-      .populate("user", "_id name email"); // optional: populate user info
+      .populate("user", "_id email username"); // populate safe fields
 
     res.json(events);
   } catch (err) {

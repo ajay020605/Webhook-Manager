@@ -14,11 +14,15 @@
     "bcrypt": "^6.0.0",
     "bullmq": "^5.58.0",
     "cors": "^2.8.5",
-    "dotenv": "^16.4.5",
+    "dotenv": "^16.6.1",
     "express": "^4.21.2",
-    "ioredis": "^5.4.1",
+    "express-validator": "^7.2.1",
+    "ioredis": "^5.7.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.17.1",
+    "nodemailer": "^7.0.5",
+    "speakeasy": "^2.0.0",
+    "svg-captcha": "^1.4.0",
     "zod": "^4.0.17"
   },
   "devDependencies": {
